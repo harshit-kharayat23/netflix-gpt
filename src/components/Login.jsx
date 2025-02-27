@@ -1,7 +1,9 @@
 import React, { useState ,useRef} from "react";
 import Header from "./Header";
-import { Link } from "react-router-dom";
 import { validate } from "../utils/formValdation";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../utils/fireBase";
+import GoogleSignin from "./GoogleSignin";
 const Login=()=>{
     const email=useRef(null);
     const password=useRef(null);
@@ -14,6 +16,29 @@ const Login=()=>{
        
         const feedback=validate(email.current.value,password.current.value);
         setErrorMessage(feedback);
+        if(feedback)return ;
+        // sign IN and sign up
+
+           
+        if(!isSignInForm){
+            // sign up form
+            createUserWithEmailAndPassword(auth, email.current.value, password.current.value)
+            .then((userCredential) => {
+            // Signed up 
+            const user = userCredential.user;
+            console.log(user);
+            // ...
+            })
+            .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            setErrorMessage(errorCode+errorMessage);
+            // ..
+            });
+        }
+        else{
+
+        }
         
     }
     return(
@@ -30,7 +55,8 @@ const Login=()=>{
                 <input ref={password} type="password" placeholder="Password" className="p-3 my-4 bg-gray-500 rounded-md w-full"/>
                 <p className="text-red-700">{errorMessage}</p>
                 <button className="p-2 my-4 w-full bg-red-500 rounded-md" onClick={validateForm}>{isSignInForm ?"Sign In":"Sign Up"}</button>
-                <p className="cursor-pointer" onClick={toggleSignUpform}>{isSignInForm ?"New to Netflix? Sign up Now":"Already a member.Sign In now"} </p>
+                <p className="cursor-pointer " onClick={toggleSignUpform}>{isSignInForm ?"New to Netflix? Sign up Now":"Already a member.Sign In now"} </p>
+                <GoogleSignin/>
             </form>
         </div>
     )
