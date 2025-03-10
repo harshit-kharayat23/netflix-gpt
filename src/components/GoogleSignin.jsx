@@ -8,7 +8,7 @@ function GoogleSignin() {
     const provider = new GoogleAuthProvider();
     try {
       const result = await signInWithPopup(auth, provider);
-      console.log(result);
+
 
       if (result.user) {
         toast.success("User logged in successfully", {

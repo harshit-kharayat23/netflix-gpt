@@ -30,7 +30,7 @@ const Login=()=>{
             createUserWithEmailAndPassword(auth, email.current.value, password.current.value)
             .then((userCredential) => {
                 const user = userCredential.user;
-                console.log(user)
+
                 updateProfile(user, {
                     displayName: name.current.value,
                     photoURL: PHOTOURL 
@@ -59,7 +59,7 @@ const Login=()=>{
             signInWithEmailAndPassword(auth, email.current.value, password.current.value)
             .then((userCredential) => {
                 const user = userCredential.user;
-                console.log(user);
+
                 const {uid,email,displayName,photoURL} = auth.currentUser;
                 dispatch(addUser(uid,email,displayName,photoURL))
 
