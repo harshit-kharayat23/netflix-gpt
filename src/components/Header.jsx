@@ -1,10 +1,51 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { auth } from '../utils/fireBase';
+import { signOut,onAuthStateChanged } from "firebase/auth";
+import { useDispatch, useSelector } from 'react-redux';
+import { addUser, removeUser } from '../utils/userSlice';
+import { useNavigate } from 'react-router-dom';
+import { LOGO } from '../utils/constants';
+
 
 function Header() {
+  const user=useSelector(store=>store.user)
+  const dispatch=useDispatch();
+  const navigate=useNavigate();
+  const handleSignOut=()=>{
+    signOut(auth).then(() => {
+        dispatch(removeUser());
+
+    }).catch((error) => {
+      
+    });
+    
+  }
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+        if (user) {
+            const { uid, email, displayName, photoURL } = user;
+            dispatch(addUser({ uid, email, displayName, photoURL }));
+            navigate('/browse');
+        } else {
+            dispatch(removeUser());
+            navigate('/');
+        }
+    });
+
+    return ()=> unsubscribe(); 
+}, []);
+
+
   return (
-    <div className="absolute px-4 py-2 bg-gradient-to-b from-black z-10">
-      <img className="h-[78px]" src="https://help.nflxext.com/helpcenter/OneTrust/oneTrust_production/consent/87b6a5c0-0104-4e96-a291-092c11350111/01938dc4-59b3-7bbc-b635-c4131030e85f/logos/dd6b162f-1a32-456a-9cfe-897231c7763c/4345ea78-053c-46d2-b11e-09adaef973dc/Netflix_Logo_PMS.png" alt='logo'/>
+    <div className="absolute px-4 py-2 bg-gradient-to-b from-black z-10 w-full flex justify-between" >
+      <img className="h-[78px]" src={LOGO} alt='logo'/>
+     { user && (<div className='flex p-3'>
+        <img className='w-12 h-12 ' src={user?.photoURL}/>
+        <button onClick={handleSignOut} className='font-bold text-white'>Sign Out</button>
+      </div>
+     )}
     </div>
+    
   )
 }
 
