@@ -10,7 +10,8 @@ function SecondaryContainer() {
     <div className='bg-black pl-12'>
     <div className='-mt-52 relative z-20 pl-2'>
       <MovieList title="Now Playing" movies={moviesList.nowPlayingMovies}/>
-      <MovieList title="Popular Movies" movies={moviesList.popularMovies}/>
+            popoularMovies:null,
+      <MovieList title="Popular Movies" movies={moviesList.popoularMovies}/>
       <MovieList title="Trending" movies={moviesList.trendingMovies}/>
     
       </div>
