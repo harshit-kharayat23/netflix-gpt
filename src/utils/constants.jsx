@@ -20,5 +20,5 @@ export const SUPPORTED_LANGUAGES= [
           {identifier:"spanish",name:"Spanish"}
 ] 
 
-export const GEMNI_CDN_URL=import.meta.env.VITE_GEMNI_CDN_URL;
-export const GEMNI_KEY=import.meta.env.VITE_GEMNI_KEY;
+export const GEMINI_CDN_URL =import.meta.env.VITE_GEMINI_CDN_URL;
+export const GEMINI_KEY =import.meta.env.VITE_GEMINI_KEY;

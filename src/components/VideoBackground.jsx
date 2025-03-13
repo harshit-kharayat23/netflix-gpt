@@ -7,6 +7,7 @@ function VideoBackground({movieId}) {
     
     useMovieVideos(movieId);
     const trailerVideo=useSelector(store=>store.movies?.movieTrailer);
+
     
   return (
     <div className='w-screen'>

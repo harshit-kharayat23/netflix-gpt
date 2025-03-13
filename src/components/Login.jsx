@@ -76,11 +76,11 @@ const Login=()=>{
     return(
         <div >
             <Header/>
-            <div className="absolute">
-                <img src={BG_URL}/>
+            <div className="absolute ">
+                <img className="h-screen md:w-screen object-cover" src={BG_URL}/>
             </div>
             
-            <form onSubmit={(e)=>{e.preventDefault()}} className="w-3/12 p-12 absolute  bg-black my-36 mx-auto right-0 left-0 text-white rounded-md opacity-80" >
+            <form onSubmit={(e)=>{e.preventDefault()}} className="w-full my-[50%] md:w-3/12 p-12 absolute  bg-black md:my-36 mx-auto right-0 left-0 text-white rounded-md opacity-80" >
                 <h1 className="text-3xl p-2 font-bold">{isSignInForm ?"Sign In":"Sign Up"}</h1>
                 { !isSignInForm && <input ref={name} type="text" placeholder="full name" className="p-3 my-4 bg-gray-500 rounded-md w-full"/> }
                 <input ref={email} type="text" placeholder="email" className="p-3 my-4 bg-gray-500 rounded-md w-full"/>

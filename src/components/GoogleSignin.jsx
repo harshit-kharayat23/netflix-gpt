@@ -16,7 +16,7 @@ function GoogleSignin() {
         });
       }
     } catch (error) {
-      console.error("Login failed:", error);
+
       toast.error("Google Sign-In failed. Please try again.", {
         position: "top-center",
       });

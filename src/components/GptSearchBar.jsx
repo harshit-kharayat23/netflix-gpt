@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react'
 import { lang } from '../utils/languageConstants'
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios';
-import { API_OPTIONS, GEMNI_CDN_URL, GEMNI_KEY } from '../utils/constants';
+import { API_OPTIONS,GEMINI_CDN_URL, GEMINI_KEY} from '../utils/constants';
 import { addSearchMovies, clearSearch } from '../utils/gptSlice';
 
 function GptSearchBar() {
@@ -24,7 +24,7 @@ function GptSearchBar() {
     const gptQuery="Act as a movie Recommendation System and suggest me 5 name of  movies comma separated for the query "+searchTxt.current.value+"just give me movie name no explaination"
 
     const gemiResponse= await axios({
-      url:GEMNI_CDN_URL+GEMNI_KEY,
+      url:GEMINI_CDN_URL+GEMINI_KEY,
       method:"post",
       data:{
         "contents": [{
@@ -33,12 +33,12 @@ function GptSearchBar() {
       }
     })
     const gemniMovies=gemiResponse?.data?.candidates[0]?.content.parts[0]?.text.split(',');
-    console.log(gemniMovies);
+
 
     const promiseArray=gemniMovies.map((movie)=>searchMovieTMDB(movie))
     // [promise,promise,promise]
       const tmdbResults=await Promise.all(promiseArray);
-      console.log(tmdbResults);
+
       dispatch(addSearchMovies({movieNames:gemniMovies,movieResults:tmdbResults}));
     
 
@@ -52,8 +52,8 @@ function GptSearchBar() {
   
   
   return (
-    <div className='  pt-[10%] flex justify-center '>
-        <form  className=' bg-black w-1/2 grid grid-cols-12' onSubmit={(e)=>e.preventDefault()}>
+    <div className='  pt-[50%] md:pt-[10%] flex justify-center '>
+        <form  className=' bg-black w-full md:w-1/2 grid grid-cols-12' onSubmit={(e)=>e.preventDefault()}>
             <input ref={searchTxt} type='text' className='p-4 m-4 col-span-9' placeholder={lang[currentLang].gptSearchPlacHolder}/> 
             <button onClick={handleGptSearchClick} className='p-2 m-2 bg-red-500 text-white rounded-lg col-span-3'>{lang[currentLang].search}</button>
         </form>
